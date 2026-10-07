@@ -32,6 +32,8 @@ Sampling options: original, 5, 10 (default), 30 seconds. UTC milliseconds are ca
 
 ## Cloudflare deployment
 
+The production Git connection was configured on 7 October 2026. Every push to `main` runs the build's type checks and test suite before deployment. Preview builds are disabled. Check the Cloudflare build result and `/api/version` against the pushed commit when verifying a release.
+
 GitHub repository: https://github.com/gattim77/geoconversion. Cloudflare Workers Builds watches `main`: build `npm run build`, deploy `node scripts/deploy.mjs`, root `/`. `wrangler.json` binds static `dist/`, the existing `sites-admin-dashboard` service, version metadata and the custom hostname. It enables no observability logs. `/api/version` exposes the deployed Git revision. Cloudflare custom domains manage the sole requested hostname and certificate.
 
 The admin repository must apply `migrations/geoconversion.sql` to the existing Strata DB, then deploy its aggregate ingestion/detail changes. No GeoConversion secrets are required. Existing admin login/MFA and bindings are preserved. Local telemetry may be unavailable without the service binding and should never block conversion.
